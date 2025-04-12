@@ -13,6 +13,15 @@ interface User {
   email: string;
   name: string;
   role: UserRole;
+  bio?: string;
+  skills?: string[];
+  hourlyRate?: number;
+  availability?: string;
+  phone?: string;
+  location?: string;
+  companyName?: string;
+  industry?: string;
+  website?: string;
   // Add more user properties as needed
 }
 
@@ -26,19 +35,23 @@ interface AuthContextType {
     password: string,
     role: UserRole,
   ) => Promise<void>;
+  updateProfile: (profileData: Partial<User>) => Promise<void>;
   logout: () => void;
   error: string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const useAuth = () => {
+// Fix Fast Refresh compatibility issue by making this a named function declaration
+function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
     throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
-};
+}
+
+export { useAuth };
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -115,12 +128,32 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setUser(null);
   };
 
+  const updateProfile = async (profileData: Partial<User>) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      // In a real app, this would be an API call to update the profile
+      // For demo purposes, we'll update the user in localStorage
+      if (user) {
+        const updatedUser = { ...user, ...profileData };
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+        setUser(updatedUser);
+      }
+    } catch (err) {
+      setError("Failed to update profile. Please try again.");
+      console.error("Profile update error:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const value = {
     user,
     isAuthenticated: !!user,
     isLoading,
     login,
     register,
+    updateProfile,
     logout,
     error,
   };
