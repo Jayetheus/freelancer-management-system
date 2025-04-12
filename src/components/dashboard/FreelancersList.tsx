@@ -199,7 +199,11 @@ const FreelancersList = () => {
         <div className="flex flex-col space-y-4">
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-semibold">Active Freelancers</h2>
-            <Button variant="outline" className="ml-auto">
+            <Button
+              variant="outline"
+              className="ml-auto"
+              onClick={() => alert("Advanced filters dialog would open here")}
+            >
               <Filter className="h-4 w-4 mr-2" />
               Advanced Filters
             </Button>
@@ -313,7 +317,9 @@ const FreelancersList = () => {
                           <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => handleViewProfile(freelancer.id)}
+                            onClick={() =>
+                              (window.location.href = "/freelancer/profile")
+                            }
                           >
                             View
                           </Button>

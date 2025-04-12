@@ -232,7 +232,11 @@ const ProjectsList = () => {
                   <SelectItem value="cancelled">Cancelled</SelectItem>
                 </SelectContent>
               </Select>
-              <Button variant="outline" size="icon">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => alert("Project filters dialog would open here")}
+              >
                 <Filter className="h-4 w-4" />
               </Button>
             </div>
@@ -319,10 +323,24 @@ const ProjectsList = () => {
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">
-                        <Button variant="outline" size="sm">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() =>
+                            alert(
+                              `Viewing details for project: ${project.name}`,
+                            )
+                          }
+                        >
                           View Details
                         </Button>
-                        <Button variant="ghost" size="icon">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() =>
+                            alert(`More options for project: ${project.name}`)
+                          }
+                        >
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </div>

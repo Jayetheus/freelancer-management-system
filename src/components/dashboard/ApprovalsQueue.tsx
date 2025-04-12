@@ -357,7 +357,12 @@ const ApprovalsQueue = () => {
               </Button>
               <Button
                 variant="destructive"
-                onClick={() => handleReject(selectedItem?.id || "")}
+                onClick={() => {
+                  handleReject(selectedItem?.id || "");
+                  alert(
+                    `Rejected submission from ${selectedItem?.freelancerName}`,
+                  );
+                }}
               >
                 Reject
               </Button>
@@ -365,6 +370,9 @@ const ApprovalsQueue = () => {
                 onClick={() => {
                   handleApprove(selectedItem?.id || "");
                   setIsDetailsOpen(false);
+                  alert(
+                    `Approved submission from ${selectedItem?.freelancerName}`,
+                  );
                 }}
               >
                 Approve
